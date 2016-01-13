@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PowerWheel : MonoBehaviour {    
+public class PowerWheel : MonoBehaviour {
+
+    bool escapePressed = false;
 
     void Start() {
         gameObject.GetComponent<Renderer>().enabled = false;
@@ -16,6 +18,7 @@ public class PowerWheel : MonoBehaviour {
             if (hit.transform.name == "Rage")
             {
                 Debug.Log("FEEL THE BERN");
+                Camera.main.GetComponent<GrabbingAndDropping>().rage = true;
             }
 
             if (hit.transform.name == "Fear")
@@ -44,14 +47,21 @@ public class PowerWheel : MonoBehaviour {
 	
 	void Update () {
 
-        if (Input.GetMouseButton(1))
-            gameObject.GetComponent<Renderer>().enabled = true;
-        else
-            gameObject.GetComponent<Renderer>().enabled = false;
+        if (Input.GetKeyDown(KeyCode.Escape))
+            escapePressed =! escapePressed;
 
-        if(Input.GetMouseButtonUp(1))
+        if (escapePressed == false)
         {
-            detectWhichPower();
+
+            if (Input.GetMouseButton(1))
+                gameObject.GetComponent<Renderer>().enabled = true;
+            else
+                gameObject.GetComponent<Renderer>().enabled = false;
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                detectWhichPower();
+            }
         }
     }
 }

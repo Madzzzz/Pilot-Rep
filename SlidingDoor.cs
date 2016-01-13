@@ -5,7 +5,8 @@ public class SlidingDoor : MonoBehaviour {
 
 	public Transform trapWallPlaceholder;
 	public Transform endTrapPos;
-	public float doorSpeed;
+    public Transform startTrapPos;
+    public float doorSpeed;
 
 	public bool trapped = false;
 
@@ -16,16 +17,16 @@ public class SlidingDoor : MonoBehaviour {
 		SetDestination (endTrapPos);
 	}
 
-	void MakeTrue(){
+	public void MakeTrue(){
 		trapped = true;
 	}
 
 	void FixedUpdate(){
 
 		if (trapped == true) {
+            SetDestination(endTrapPos);
 			trapWallPlaceholder.GetComponent<Rigidbody>().MovePosition (trapWallPlaceholder.position + direction * doorSpeed * Time.fixedDeltaTime);
 		}
-
 
 		if (Vector3.Distance (trapWallPlaceholder.position, destination.position) < doorSpeed * Time.fixedDeltaTime) {
 			doorSpeed = 0;

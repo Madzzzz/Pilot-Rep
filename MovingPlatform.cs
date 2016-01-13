@@ -8,8 +8,8 @@ public class MovingPlatform : MonoBehaviour {
 	public Transform endTransform;
 	public float platformSpeed;
 
-	Vector3 direction;
-	Transform destination;
+	public Vector3 direction;
+	public Transform destination;
 
 	void Start(){
 		SetDestination (startTransform);
@@ -18,12 +18,13 @@ public class MovingPlatform : MonoBehaviour {
 	void FixedUpdate(){
 		platform.GetComponent<Rigidbody>().MovePosition (platform.position + direction * platformSpeed * Time.fixedDeltaTime);
 
-		if (Vector3.Distance (platform.position, destination.position) < platformSpeed * Time.fixedDeltaTime) {
+        if (Vector3.Distance (platform.position, destination.position) < platformSpeed * Time.fixedDeltaTime) {
 			SetDestination (destination == startTransform ? endTransform : startTransform);
 		}
+
 	}
 
-	void OnDrawGizmos(){
+    void OnDrawGizmos(){
 		
 		Gizmos.color = Color.green;
 		Gizmos.DrawWireCube (startTransform.position, platform.localScale);

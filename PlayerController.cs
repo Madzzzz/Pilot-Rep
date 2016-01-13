@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
 
     public Camera viewport;
@@ -9,37 +8,71 @@ public class PlayerController : MonoBehaviour {
 
     float xSpeed;
     float zSpeed;
+    bool moveTrue;
+    public bool onPlatform = false;
+    public bool onBouncypad = false;
+    float bounceHeight = 10;
 
     Vector3 moveVector;
+    Vector3 platformVector;
 
     float vVelocity;
     public float gravity = 1F;
 
 	public float forwardSpeed;
 	public float jumpHeight;
+    GameObject MovePlat;
 
     void Start () {
+        moveTrue = true;
         viewport = GetComponentInChildren<Camera>();
         cc = GetComponent<CharacterController>();
+        MovePlat = GameObject.Find("MovingPlatform");
 
     }
 
-	void Update () {
+	void FixedUpdate () {
 
-        xSpeed = Input.GetAxis("Horizontal");
-        zSpeed = Input.GetAxis("Vertical");
+        if (moveTrue == true)
+        {
 
-        moveVector = new Vector3(xSpeed, 0, zSpeed);
-        moveVector = transform.TransformDirection(moveVector) * forwardSpeed;
+            xSpeed = Input.GetAxis("Horizontal");
+            zSpeed = Input.GetAxis("Vertical");
 
-        vVelocity += Physics.gravity.y * gravity * Time.deltaTime;
+            moveVector = new Vector3(xSpeed, 0, zSpeed);
+            platformVector = new Vector3(0, 0, 0);
+            moveVector = transform.TransformDirection(moveVector) * forwardSpeed;
 
-        if (Input.GetKeyDown ("space") && cc.isGrounded) {      // jumping function
-            vVelocity = jumpHeight;
+            vVelocity += Physics.gravity.y * gravity * Time.deltaTime * Time.maximumDeltaTime;
+            if (Input.GetKeyDown("space") && cc.isGrounded)
+            {
+                vVelocity = jumpHeight;
+            }
+
+            if (onBouncypad == true)
+            {
+                vVelocity = bounceHeight;
+                platformVector = (MovePlat.GetComponent<MovingPlatform>().direction);
+                onBouncypad = false;
+            }
+
+            if (onPlatform == true)
+            {
+                platformVector = (MovePlat.GetComponent<MovingPlatform>().direction);
+            }
+
+            moveVector.y = vVelocity;
+            cc.Move((moveVector + platformVector) * Time.deltaTime);
         }
 
-        moveVector.y = vVelocity;
-        cc.Move(moveVector * Time.deltaTime);
-		
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            moveTrue =! moveTrue;
+        }
+
+
+        
+
     }
 }
