@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
 
     float xSpeed;
     float zSpeed;
-    bool moveTrue;
+    bool moveTrue = true;
     public bool onPlatform = false;
     public bool onBouncypad = false;
     float bounceHeight = 10;
@@ -24,14 +24,28 @@ public class PlayerController : MonoBehaviour {
     GameObject MovePlat;
 
     void Start () {
-        moveTrue = true;
         viewport = GetComponentInChildren<Camera>();
         cc = GetComponent<CharacterController>();
-        MovePlat = GameObject.Find("MovingPlatform");
 
     }
 
-	void FixedUpdate () {
+    void OnTriggerEnter(Collider coll)
+    {
+        if (coll.tag == ("MovingPlatform"))
+        {
+            onPlatform = true;
+            MovePlat = coll.gameObject.transform.parent.gameObject;
+        }
+    }
+
+    void OnTriggerExit(Collider coll)
+    {
+        if (coll.tag == ("MovingPlatform"))
+            onPlatform = false;
+        
+    }
+
+    void FixedUpdate () {
 
         if (moveTrue == true)
         {
@@ -43,16 +57,17 @@ public class PlayerController : MonoBehaviour {
             platformVector = new Vector3(0, 0, 0);
             moveVector = transform.TransformDirection(moveVector) * forwardSpeed;
 
-            vVelocity += Physics.gravity.y * gravity * Time.deltaTime * Time.maximumDeltaTime;
-            if (Input.GetKeyDown("space") && cc.isGrounded)
+            if(cc.isGrounded)
             {
-                vVelocity = jumpHeight;
+                vVelocity = 0;
+
+                if (Input.GetKeyDown("space"))
+                    vVelocity = jumpHeight;
             }
 
             if (onBouncypad == true)
             {
                 vVelocity = bounceHeight;
-                platformVector = (MovePlat.GetComponent<MovingPlatform>().direction);
                 onBouncypad = false;
             }
 
@@ -61,6 +76,7 @@ public class PlayerController : MonoBehaviour {
                 platformVector = (MovePlat.GetComponent<MovingPlatform>().direction);
             }
 
+            vVelocity += Physics.gravity.y * gravity * Time.deltaTime;
             moveVector.y = vVelocity;
             cc.Move((moveVector + platformVector) * Time.deltaTime);
         }
