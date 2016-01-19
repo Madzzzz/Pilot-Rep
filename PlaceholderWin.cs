@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlaceholderWin : MonoBehaviour {
 
@@ -10,5 +11,6 @@ public class PlaceholderWin : MonoBehaviour {
         {
             Debug.Log("Yay you won");
         }
+        SceneManager.LoadScene(2);
     }
 }

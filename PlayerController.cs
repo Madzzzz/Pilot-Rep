@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour {
 
     float xSpeed;
     float zSpeed;
-    bool moveTrue = true;
     public bool onPlatform = false;
     public bool onBouncypad = false;
     float bounceHeight = 10;
@@ -23,10 +22,10 @@ public class PlayerController : MonoBehaviour {
 	public float jumpHeight;
     GameObject MovePlat;
 
-    void Start () {
+    void Start ()
+    {
         viewport = GetComponentInChildren<Camera>();
         cc = GetComponent<CharacterController>();
-
     }
 
     void OnTriggerEnter(Collider coll)
@@ -42,53 +41,37 @@ public class PlayerController : MonoBehaviour {
     {
         if (coll.tag == ("MovingPlatform"))
             onPlatform = false;
-        
     }
 
-    void FixedUpdate () {
+    void FixedUpdate ()
+    {
+        xSpeed = Input.GetAxis("Horizontal");
+        zSpeed = Input.GetAxis("Vertical");
 
-        if (moveTrue == true)
+        moveVector = new Vector3(xSpeed, 0, zSpeed);
+        platformVector = new Vector3(0, 0, 0);
+        moveVector = transform.TransformDirection(moveVector) * forwardSpeed;
+
+        if (cc.isGrounded)
         {
-
-            xSpeed = Input.GetAxis("Horizontal");
-            zSpeed = Input.GetAxis("Vertical");
-
-            moveVector = new Vector3(xSpeed, 0, zSpeed);
-            platformVector = new Vector3(0, 0, 0);
-            moveVector = transform.TransformDirection(moveVector) * forwardSpeed;
-
-            if(cc.isGrounded)
-            {
-                vVelocity = 0;
-
-                if (Input.GetKeyDown("space"))
-                    vVelocity = jumpHeight;
-            }
-
-            if (onBouncypad == true)
-            {
-                vVelocity = bounceHeight;
-                onBouncypad = false;
-            }
-
-            if (onPlatform == true)
-            {
-                platformVector = (MovePlat.GetComponent<MovingPlatform>().direction);
-            }
-
-            vVelocity += Physics.gravity.y * gravity * Time.deltaTime;
-            moveVector.y = vVelocity;
-            cc.Move((moveVector + platformVector) * Time.deltaTime);
+            vVelocity = 0;
+            if (Input.GetKeyDown("space"))
+                vVelocity = jumpHeight;
         }
 
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (onBouncypad == true)
         {
-            moveTrue =! moveTrue;
+            vVelocity = bounceHeight;
+            onBouncypad = false;
         }
 
-
+        if (onPlatform == true)
+        {
+            platformVector = (MovePlat.GetComponent<MovingPlatform>().direction);
+        }
         
-
+        vVelocity += Physics.gravity.y * gravity * Time.deltaTime;
+        moveVector.y = vVelocity;
+        cc.Move((moveVector + platformVector) * Time.deltaTime);
     }
 }

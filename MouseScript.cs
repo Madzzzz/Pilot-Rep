@@ -20,57 +20,75 @@ public class MouseScript : MonoBehaviour {
     public float dampSpeed;
     public float mouseSpeed;
     private float actualMouseSpeed;
-
-    bool escapePressed = false;
+    public bool escapePressed = false;
+    public bool alive;
 
     void Start () {
 
         player = transform.root;
+        lockMouse();
+        alive = true;
+    }	
+
+    void lockMouse()
+    {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         actualMouseSpeed = mouseSpeed;
-    }	
+    }
+
+    void openMouse()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        actualMouseSpeed = 0;
+    }
+
+    public void PauseUnpause()
+    {
+            escapePressed = !escapePressed;
+
+            if (Time.timeScale == 1.0)
+            {
+                openMouse();
+                Time.timeScale = 0.0f;
+                GameObject.Find("PauseScreen").GetComponent<PauseMenu>().Pause();
+            }
+            else
+            {
+                lockMouse();
+                Time.timeScale = 1.0f;
+                GameObject.Find("PauseScreen").GetComponent<PauseMenu>().Unpause();
+            }
+        
+    }
+
+    public void DeathScreen()
+    {
+        Debug.Log("These Beat Be Retarded");
+        openMouse();
+        escapePressed = true;
+        Time.timeScale = 0.0f;
+    }
 	
 	void Update () {
 
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetButtonDown(("Escape")))
         {
-            escapePressed =! escapePressed;
-
-            if (escapePressed == true)
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                actualMouseSpeed = 0;
-
-            }
-
-            if (escapePressed == false)
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                actualMouseSpeed = mouseSpeed;
-            }
+            PauseUnpause();
         }
+
+        if (Input.GetButtonDown("Death"))
+            DeathScreen();
 
         if (escapePressed == false)
         {
 
             if (Input.GetMouseButton(1))
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                actualMouseSpeed = 0;
-
-            }
+                openMouse();
 
             if (Input.GetMouseButtonUp(1))
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                actualMouseSpeed = mouseSpeed;
-            }
-
+                lockMouse();
 
             rotationX += Input.GetAxis("Mouse X") * actualMouseSpeed;
             rotationY -= Input.GetAxis("Mouse Y") * actualMouseSpeed;
@@ -83,6 +101,5 @@ public class MouseScript : MonoBehaviour {
             transform.localEulerAngles = new Vector3(targetRotationY, 0, 0);
             player.localEulerAngles = new Vector3(0, targetRotationX, 0);
         }
-
     }
 }

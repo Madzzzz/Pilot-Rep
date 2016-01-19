@@ -36,7 +36,6 @@ public class GrabbingAndDropping : MonoBehaviour {
         Vector3 target = position + Camera.main.transform.forward * range;
 
         if (Physics.Linecast(position, target, out raycastHit)) {
-            Debug.Log(raycastHit.collider.gameObject);
             if (raycastHit.collider.gameObject.tag == ("Rage"))
             {
                 Destroy(raycastHit.collider.gameObject);
@@ -86,7 +85,6 @@ public class GrabbingAndDropping : MonoBehaviour {
             dropVelocity = (speed/dropForce) * throwVector.normalized;
             grabbedObject.GetComponent<Rigidbody>().velocity = dropVelocity;
             grabbedObject.GetComponent<Rigidbody>().useGravity = true;
-            Debug.Log(dropVelocity);
         }
 
 		grabbedObject = null;

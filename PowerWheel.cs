@@ -47,7 +47,7 @@ public class PowerWheel : MonoBehaviour {
 	
 	void Update () {
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("Escape"))
             escapePressed =! escapePressed;
 
         if (escapePressed == false)
