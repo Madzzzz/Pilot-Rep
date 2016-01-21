@@ -28,6 +28,7 @@ public class MouseScript : MonoBehaviour {
         player = transform.root;
         lockMouse();
         alive = true;
+        Time.timeScale = 1.0f;
     }	
 
     void lockMouse()
@@ -65,7 +66,6 @@ public class MouseScript : MonoBehaviour {
 
     public void DeathScreen()
     {
-        Debug.Log("These Beat Be Retarded");
         openMouse();
         escapePressed = true;
         Time.timeScale = 0.0f;
@@ -77,9 +77,6 @@ public class MouseScript : MonoBehaviour {
         {
             PauseUnpause();
         }
-
-        if (Input.GetButtonDown("Death"))
-            DeathScreen();
 
         if (escapePressed == false)
         {

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class StartMenu : MonoBehaviour {
 
     public Canvas quitMenu;
+    public Canvas startMenu;
     public Button startText;
     public Button exitText;
     
@@ -15,6 +16,7 @@ public class StartMenu : MonoBehaviour {
         //startText = startText.GetComponent<Button>();
         //exitText = exitText.GetComponent<Button>();
         quitMenu.enabled = false;
+        startMenu.enabled = true;
     }
 
     public void ExitPress()
@@ -33,7 +35,7 @@ public class StartMenu : MonoBehaviour {
 
     public void StartLevel()
     {
-        SceneManager.LoadScene(1);
+        startMenu.enabled = false;
         Time.timeScale = 1.0f;
     }
 

@@ -28,8 +28,8 @@ public class PauseMenu : MonoBehaviour {
         Input.GetButtonDown("Escape");
     }
 
-    public void ExitPress()
+    /*public void ExitPress()
     {
         SceneManager.LoadScene(0);
-    }
+    }*/
 }

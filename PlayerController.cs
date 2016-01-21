@@ -10,10 +10,12 @@ public class PlayerController : MonoBehaviour {
     float zSpeed;
     public bool onPlatform = false;
     public bool onBouncypad = false;
+    public bool tookDamage = false;
     float bounceHeight = 10;
 
     Vector3 moveVector;
     Vector3 platformVector;
+    Vector3 tookDamageVector;
 
     float vVelocity;
     public float gravity = 1F;
@@ -51,6 +53,7 @@ public class PlayerController : MonoBehaviour {
         moveVector = new Vector3(xSpeed, 0, zSpeed);
         platformVector = new Vector3(0, 0, 0);
         moveVector = transform.TransformDirection(moveVector) * forwardSpeed;
+        tookDamageVector -= tookDamageVector * Time.deltaTime;
 
         if (cc.isGrounded)
         {
@@ -69,9 +72,17 @@ public class PlayerController : MonoBehaviour {
         {
             platformVector = (MovePlat.GetComponent<MovingPlatform>().direction);
         }
+
+        if(tookDamage == true)
+        {
+            vVelocity = 6;
+            Debug.Log("shuld be going backwards now");
+            tookDamageVector = (-transform.TransformDirection(moveVector)) * 2;
+            tookDamage = false;
+        }
         
         vVelocity += Physics.gravity.y * gravity * Time.deltaTime;
         moveVector.y = vVelocity;
-        cc.Move((moveVector + platformVector) * Time.deltaTime);
+        cc.Move((moveVector + platformVector + tookDamageVector) * Time.deltaTime);
     }
 }

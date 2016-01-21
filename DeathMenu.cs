@@ -16,13 +16,4 @@ public class DeathMenu : MonoBehaviour {
         DeathScreen.enabled = false;
     }
 
-    public void Dead()
-    {
-        DeathScreen.enabled = true;
-    }
-
-    public void ExitPress()
-    {
-        SceneManager.LoadScene(0);
-    }
 }

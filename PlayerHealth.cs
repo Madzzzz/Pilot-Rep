@@ -8,18 +8,17 @@ public class PlayerHealth : MonoBehaviour {
     public float resetAfterDeathTime = 5f;              // How much time from the player dying to the level reseting.
     
     private PlayerController playerController;              // Reference to the player movement script.
-    private MouseScript mouseScript;
     private float timer;                                // A timer for counting to the reset of the level once the player is dead.
     private bool playerDead = false;                    // A bool to show if the player is dead or not.
 
     public Text HealthDisplay;
 
+    public Canvas deathScreen;
 
     void Start()
     {
         // Setting up the references.
         playerController = GetComponent<PlayerController>();
-        mouseScript = GetComponent<MouseScript>();
     }
 
 
@@ -55,16 +54,14 @@ public class PlayerHealth : MonoBehaviour {
 
     public void PlayerDead()
     {
-        Debug.Log("muh dieing");
     }
 
 
     void DeathScreen()
     {
-        Debug.Log("muh death");
         playerController.enabled = false;
-        Input.GetButtonDown("Death");
-        GameObject.Find("DeathScreen").GetComponent<DeathMenu>().Dead();
+        Camera.main.GetComponent<MouseScript>().DeathScreen();
+        deathScreen.enabled = true;
     }
 
 
@@ -79,10 +76,8 @@ public class PlayerHealth : MonoBehaviour {
     {
         if (coll.tag == ("Enemy"))
         {
-            TakeDamage(30);
-            Debug.Log("good hit");
+            TakeDamage(1);
+            gameObject.GetComponent<PlayerController>().tookDamage = true;
         }
-        else
-            Debug.Log("bad hit");
     }
 }
