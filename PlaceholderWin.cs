@@ -11,6 +11,6 @@ public class PlaceholderWin : MonoBehaviour {
         {
             Debug.Log("Yay you won");
         }
-        SceneManager.LoadScene(2);
+        //SceneManager.LoadScene(2);
     }
 }

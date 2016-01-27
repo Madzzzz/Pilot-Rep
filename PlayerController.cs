@@ -47,18 +47,17 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate ()
     {
-        xSpeed = Input.GetAxis("Horizontal");
-        zSpeed = Input.GetAxis("Vertical");
-
-        moveVector = new Vector3(xSpeed, 0, zSpeed);
-        platformVector = new Vector3(0, 0, 0);
-        moveVector = transform.TransformDirection(moveVector) * forwardSpeed;
         tookDamageVector -= tookDamageVector * Time.deltaTime;
 
         if (cc.isGrounded)
         {
+            xSpeed = Input.GetAxis("Horizontal");
+            zSpeed = Input.GetAxis("Vertical");
+            platformVector = new Vector3(0, 0, 0);
+            moveVector = new Vector3(xSpeed, 0, zSpeed);
+            moveVector = transform.TransformDirection(moveVector) * forwardSpeed;
             vVelocity = 0;
-            if (Input.GetKeyDown("space"))
+            if (Input.GetKey(KeyCode.Space))
                 vVelocity = jumpHeight;
         }
 
@@ -79,6 +78,11 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("shuld be going backwards now");
             tookDamageVector = (-transform.TransformDirection(moveVector)) * 2;
             tookDamage = false;
+        }
+
+        if(vVelocity <= -30)
+        {
+            gameObject.GetComponent<PlayerHealth>().health = 0;
         }
         
         vVelocity += Physics.gravity.y * gravity * Time.deltaTime;

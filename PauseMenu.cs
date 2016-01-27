@@ -25,11 +25,5 @@ public class PauseMenu : MonoBehaviour {
     public void Unpause()
     {
         PauseScreen.enabled = false;
-        Input.GetButtonDown("Escape");
     }
-
-    /*public void ExitPress()
-    {
-        SceneManager.LoadScene(0);
-    }*/
 }

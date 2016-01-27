@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public class LoadingScreen : MonoBehaviour {
+
     public GameObject background;
     public GameObject text;
     public GameObject progressbar;
+
+    
 
     private int loadProgress = 0;
 
@@ -16,9 +20,24 @@ public class LoadingScreen : MonoBehaviour {
         progressbar.SetActive(false);
     }
 
-    public void startLoad()
+    public void load1()
     {
-        StartCoroutine(DisplayLoadingScreen("PlaceHolderLevel"));
+        StartCoroutine(DisplayLoadingScreen("Level 1"));
+    }
+
+    public void load2()
+    {
+        StartCoroutine(DisplayLoadingScreen("Level 2"));
+    }
+
+    public void load3()
+    {
+        StartCoroutine(DisplayLoadingScreen("Level 3"));
+    }
+
+    public void load4()
+    {
+        StartCoroutine(DisplayLoadingScreen("Level 4"));
     }
 
     public void loadSave()
@@ -34,6 +53,14 @@ public class LoadingScreen : MonoBehaviour {
     public void returnToMenu()
     {
         StartCoroutine(DisplayLoadingScreen("StartMenu"));
+    }
+
+    public void reloadCurrent()
+    {
+        StartCoroutine(DisplayLoadingScreen(Application.loadedLevelName)); 
+
+        //Application.LoadLevel(Application.loadedLevel);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene);
     }
 
     IEnumerator DisplayLoadingScreen(string level)

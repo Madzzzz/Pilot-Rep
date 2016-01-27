@@ -25,6 +25,7 @@ public class MouseScript : MonoBehaviour {
 
     void Start () {
 
+        rotationX = 90;
         player = transform.root;
         lockMouse();
         alive = true;
@@ -47,22 +48,22 @@ public class MouseScript : MonoBehaviour {
 
     public void PauseUnpause()
     {
-            escapePressed = !escapePressed;
-
-            if (Time.timeScale == 1.0)
-            {
-                openMouse();
-                Time.timeScale = 0.0f;
-                GameObject.Find("PauseScreen").GetComponent<PauseMenu>().Pause();
-            }
-            else
-            {
-                lockMouse();
-                Time.timeScale = 1.0f;
-                GameObject.Find("PauseScreen").GetComponent<PauseMenu>().Unpause();
-            }
-        
+        if (Time.timeScale == 1.0)
+        {
+            escapePressed = true;
+            openMouse();
+            Time.timeScale = 0.0f;
+            GameObject.Find("PauseScreen").GetComponent<PauseMenu>().Pause();
+        }
+        else
+        {
+            escapePressed = false;
+            lockMouse();
+            GameObject.Find("PauseScreen").GetComponent<PauseMenu>().Unpause();
+            Time.timeScale = 1.0f;
+        }
     }
+    
 
     public void DeathScreen()
     {
@@ -82,10 +83,16 @@ public class MouseScript : MonoBehaviour {
         {
 
             if (Input.GetMouseButton(1))
+            {
                 openMouse();
+                Time.timeScale = 0.3f;
+            }
 
             if (Input.GetMouseButtonUp(1))
+            {
                 lockMouse();
+                Time.timeScale = 1.0f;
+            }
 
             rotationX += Input.GetAxis("Mouse X") * actualMouseSpeed;
             rotationY -= Input.GetAxis("Mouse Y") * actualMouseSpeed;

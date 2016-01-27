@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
-
+    /*
 	public float moveSpeed = 100.0f;
 	public float rotateSpeed = 5.0f;
 
@@ -50,5 +50,5 @@ public class PlayerMovement : MonoBehaviour {
 			Debug.Log ("mouseRIGHT");
 		}
 	
-	}
+	}*/
 }
