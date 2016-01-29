@@ -19,8 +19,10 @@ public class PlayerController : MonoBehaviour {
 
     float vVelocity;
     public float gravity = 1F;
+    bool sad = false;
 
-	public float forwardSpeed;
+	public float forwardSpeedIn;
+    float forwardSpeed;
 	public float jumpHeight;
     GameObject MovePlat;
 
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour {
     {
         viewport = GetComponentInChildren<Camera>();
         cc = GetComponent<CharacterController>();
+        forwardSpeed = forwardSpeedIn;
     }
 
     void OnTriggerEnter(Collider coll)
@@ -43,6 +46,16 @@ public class PlayerController : MonoBehaviour {
     {
         if (coll.tag == ("MovingPlatform"))
             onPlatform = false;
+    }
+
+    public void SadPower()
+    {
+        sad = true;
+    }
+
+    public void NotSadAnyMore()
+    {
+        sad = false;
     }
 
     void FixedUpdate ()
@@ -84,7 +97,26 @@ public class PlayerController : MonoBehaviour {
         {
             gameObject.GetComponent<PlayerHealth>().health = 0;
         }
-        
+
+        if(sad == true)
+        {
+            forwardSpeed = forwardSpeedIn/2;
+            if (Input.GetMouseButton(0))
+                if (gameObject.transform.localScale.x < 1.0f)
+                    gameObject.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+
+            if (Input.GetMouseButton(2))
+                if (gameObject.transform.localScale.x > 0.3f)
+                    gameObject.transform.localScale -= new Vector3(0.01f, 0.01f, 0.01f);
+        }
+
+        if (sad == false)
+        {
+            forwardSpeed = forwardSpeedIn;
+            if (gameObject.transform.localScale.x < 1.0f)
+                gameObject.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+        }
+
         vVelocity += Physics.gravity.y * gravity * Time.deltaTime;
         moveVector.y = vVelocity;
         cc.Move((moveVector + platformVector + tookDamageVector) * Time.deltaTime);

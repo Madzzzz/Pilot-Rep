@@ -115,7 +115,17 @@ public class GrabbingAndDropping : MonoBehaviour {
 
     }
 
-	void Update () {
+    public void StartRage()
+    {
+        rage = true;
+    }
+
+    public void StopRage()
+    {
+        rage = false;
+    }
+
+    void Update () {
 		
 		if (Input.GetKeyDown("e")) {
 			
