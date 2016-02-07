@@ -57,7 +57,7 @@ public class LoadingScreen : MonoBehaviour {
 
     public void reloadCurrent()
     {
-        StartCoroutine(DisplayLoadingScreen(Application.loadedLevelName)); 
+        StartCoroutine(DisplayLoadingScreen(Application.loadedLevelName));
 
         //Application.LoadLevel(Application.loadedLevel);
         //SceneManager.LoadScene(SceneManager.GetActiveScene);

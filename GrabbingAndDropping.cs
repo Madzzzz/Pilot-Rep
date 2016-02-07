@@ -4,51 +4,25 @@ using System.Collections;
 public class GrabbingAndDropping : MonoBehaviour {
 
 	GameObject grabbedObject;
-    int throwForce;
-    public int regularThrowForce;
-    int rageThrowForce;
+    public float throwForce;
     Vector3 previousGrabPosition;
     public float dropForce;
     Vector3 dropVelocity;
     public bool rage = false;
 
-    void Start()
+    GameObject GetHoverObject(float range)
     {
-        rageThrowForce = regularThrowForce * 3;
-    }
-
-    GameObject GetHoverObject(float range) {
-
         Vector3 position = gameObject.transform.position;
         RaycastHit raycastHit;
 		Vector3 target = position + Camera.main.transform.forward * range;
+
         if (Physics.Linecast(position, target, out raycastHit))
             return raycastHit.collider.gameObject;
 		
 		return null;
 	}
-
-    void CheckRageRange(float range)
+    void tryGrabObject(GameObject grabObject)
     {
-
-        Vector3 position = gameObject.transform.position;
-        RaycastHit raycastHit;
-        Vector3 target = position + Camera.main.transform.forward * range;
-
-        if (Physics.Linecast(position, target, out raycastHit)) {
-            if (raycastHit.collider.gameObject.tag == ("Rage"))
-            {
-                Destroy(raycastHit.collider.gameObject);
-            }
-            else
-                return;
-        }   
-            else
-                return;
-    }
-
-    void tryGrabObject(GameObject grabObject) {
-
         if (grabObject == null || !canGrab(grabObject))
             return;
 
@@ -56,27 +30,30 @@ public class GrabbingAndDropping : MonoBehaviour {
         {
             grabbedObject = grabObject;
             grabbedObject.GetComponent<Rigidbody>().useGravity = false;
+            grabbedObject.GetComponent<Rigidbody>().detectCollisions = false;
 
         }
     }
 
-	bool canGrab(GameObject candidate) {
+	bool canGrab(GameObject candidate)
+    {
         if (candidate.GetComponent<Renderer>() != null)
         {
-            //Debug.Log(candidate.GetComponent<Renderer>().bounds.size.magnitude);
-            if (candidate.GetComponent<Renderer>().bounds.size.magnitude < 7)
+            if (candidate.GetComponent<Renderer>().bounds.size.magnitude < 2)
                 return candidate.GetComponent<Rigidbody>() != null;
+
             else
                 return false;
         }
+
         else
             return false;
 	}
 
-	void dropObject() {
+	void dropObject()
+    {
 		if (grabbedObject == null)
 			return;
-
 
        if (grabbedObject.GetComponent<Rigidbody>() != null)
         {
@@ -85,6 +62,7 @@ public class GrabbingAndDropping : MonoBehaviour {
             dropVelocity = (speed/dropForce) * throwVector.normalized;
             grabbedObject.GetComponent<Rigidbody>().velocity = dropVelocity;
             grabbedObject.GetComponent<Rigidbody>().useGravity = true;
+            grabbedObject.GetComponent<Rigidbody>().detectCollisions = true;
         }
 
 		grabbedObject = null;
@@ -94,21 +72,16 @@ public class GrabbingAndDropping : MonoBehaviour {
     {
         if (grabbedObject == null)
             return;
-
-
+        
         if (grabbedObject.GetComponent<Rigidbody>() != null)
         {
-            if (rage == true)
-                throwForce = rageThrowForce;
-            else
-                throwForce = regularThrowForce;
-
-            Vector3 throwVector = grabbedObject.transform.position - previousGrabPosition;
+            Vector3 throwVector = grabbedObject.transform.position - Camera.main.transform.position;
             float speed = throwVector.magnitude / Time.deltaTime;
-            Vector3 throwVelocity = speed * throwVector.normalized;
+            Vector3 throwVelocity = speed * throwVector.normalized / 15;
             throwVelocity += Camera.main.transform.forward * throwForce;
             grabbedObject.GetComponent<Rigidbody>().velocity = throwVelocity;
             grabbedObject.GetComponent<Rigidbody>().useGravity = true;
+            grabbedObject.GetComponent<Rigidbody>().detectCollisions = true;
         }
 
         grabbedObject = null;
@@ -125,33 +98,29 @@ public class GrabbingAndDropping : MonoBehaviour {
         rage = false;
     }
 
-    void Update () {
+    void Update ()
+    {
 		
-		if (Input.GetKeyDown("e")) {
-			
+		if (Input.GetKeyDown("e"))
+        {
 			if (grabbedObject == null)
 				tryGrabObject (GetHoverObject (2));
+
 			else
 				dropObject ();
 		}
 
-        if (Input.GetKeyDown("q")) {
-
-            throwObject();
+        if (Input.GetKeyDown("q"))
+        {
+            if (rage == true)
+                throwObject();
         }
 
-		if (grabbedObject != null) {
+		if (grabbedObject != null)
+        {
             previousGrabPosition = grabbedObject.transform.position;
 			Vector3 newPosition = gameObject.transform.position + Camera.main.transform.forward * 1.5f;
 			grabbedObject.transform.position = newPosition;
 		}
-
-        if (rage == true)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                CheckRageRange(2);
-            }
-        }
     }
 }

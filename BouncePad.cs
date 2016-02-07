@@ -9,7 +9,6 @@ public class BouncePad : MonoBehaviour {
         if (col.gameObject.tag == "Player")
         {
             col.GetComponent<PlayerController>().onBouncypad = true;
-            Debug.Log("NIGGA NIGGA NIGGA");
         }
     }
 }

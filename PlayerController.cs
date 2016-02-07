@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
     float bounceHeight = 10;
 
     Vector3 moveVector;
+    Vector3 airMoveVector;
     Vector3 platformVector;
     Vector3 tookDamageVector;
 
@@ -61,17 +62,24 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate ()
     {
         tookDamageVector -= tookDamageVector * Time.deltaTime;
+        xSpeed = Input.GetAxis("Horizontal");
+        zSpeed = Input.GetAxis("Vertical");
+        platformVector = new Vector3(0, 0, 0);
 
         if (cc.isGrounded)
         {
-            xSpeed = Input.GetAxis("Horizontal");
-            zSpeed = Input.GetAxis("Vertical");
-            platformVector = new Vector3(0, 0, 0);
             moveVector = new Vector3(xSpeed, 0, zSpeed);
+            airMoveVector = new Vector3(0, 0, 0);
             moveVector = transform.TransformDirection(moveVector) * forwardSpeed;
             vVelocity = 0;
             if (Input.GetKey(KeyCode.Space))
                 vVelocity = jumpHeight;
+        }
+
+        if (cc.isGrounded == false)
+        {
+            airMoveVector = new Vector3(xSpeed, 0, zSpeed);
+            airMoveVector = transform.TransformDirection(airMoveVector) * (forwardSpeed/4);
         }
 
         if (onBouncypad == true)
@@ -119,6 +127,6 @@ public class PlayerController : MonoBehaviour {
 
         vVelocity += Physics.gravity.y * gravity * Time.deltaTime;
         moveVector.y = vVelocity;
-        cc.Move((moveVector + platformVector + tookDamageVector) * Time.deltaTime);
+        cc.Move((moveVector + platformVector + tookDamageVector + airMoveVector) * Time.deltaTime);
     }
 }

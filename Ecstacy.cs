@@ -2,6 +2,48 @@
 using System.Collections;
 
 public class Ecstacy : MonoBehaviour {
-
     
+    public bool ecstasyOn = false;
+
+    void CheckRageRange(float range)
+    {
+
+        Vector3 position = gameObject.transform.position;
+        RaycastHit raycastHit;
+        Vector3 target = position + Camera.main.transform.forward * range;
+
+        if (Physics.Linecast(position, target, out raycastHit))
+        {
+            if (raycastHit.collider.gameObject.tag == ("Ecstacy"))
+            {
+                raycastHit.collider.gameObject.GetComponent<EcstacyObjects>().ecstacyOnObject = !raycastHit.collider.gameObject.GetComponent<EcstacyObjects>().ecstacyOnObject;
+            }
+            else
+                return;
+        }
+        else
+            return;
+    }
+
+    public void StartEcstacy()
+    {
+        ecstasyOn = true;
+    }
+
+    public void StopEcstacy()
+    {
+        ecstasyOn = false;
+    }
+
+    void Update()
+    {
+
+        if (ecstasyOn == true)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                CheckRageRange(5);
+            }
+        }
+    }
 }

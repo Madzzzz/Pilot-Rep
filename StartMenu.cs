@@ -13,8 +13,8 @@ public class StartMenu : MonoBehaviour {
 	void Start () {
 
         quitMenu = quitMenu.GetComponent<Canvas>();
-        //startText = startText.GetComponent<Button>();
-        //exitText = exitText.GetComponent<Button>();
+        startText = startText.GetComponent<Button>();
+        exitText = exitText.GetComponent<Button>();
         quitMenu.enabled = false;
         startMenu.enabled = true;
     }
