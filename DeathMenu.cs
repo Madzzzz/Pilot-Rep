@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class DeathMenu : MonoBehaviour {
     
+    //Dødsmeny
+
     public Button Load;
     public Button Exit;
     public Button Restart;

@@ -7,25 +7,29 @@ public class EcstacyObjects : MonoBehaviour {
     
 	void Update () {
 
-        if (ecstacyOnObject == true)
+        if (Camera.main.GetComponent<MouseScript>().escapePressed == false)
         {
-            gameObject.GetComponent<Rigidbody>().useGravity = false;
 
-            if (gameObject.transform.position.y > 6)
+            if (ecstacyOnObject == true)
             {
-                gameObject.GetComponent<Rigidbody>().AddForce(Vector3.down);
+                gameObject.GetComponent<Rigidbody>().useGravity = false;
+
+                if (gameObject.transform.position.y > 6)
+                {
+                    gameObject.GetComponent<Rigidbody>().AddForce(Vector3.down);
+                }
+
+                if (gameObject.transform.position.y < 6)
+                {
+                    gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up);
+                }
             }
 
-            if (gameObject.transform.position.y < 6)
-            {
-                gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up);
-            }
-        }
-        
 
-        if (ecstacyOnObject == false)
-        {
-            gameObject.GetComponent<Rigidbody>().useGravity = true;
+            if (ecstacyOnObject == false)
+            {
+                gameObject.GetComponent<Rigidbody>().useGravity = true;
+            }
         }
     }
 }

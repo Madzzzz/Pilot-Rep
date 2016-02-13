@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 
-    public float health = 100f;                         // How much health the player has left.
+    public float health;                         // How much health the player has left.
     
-    private PlayerController playerController;              // Reference to the player movement script.
+    private PlayerController playerController;          // Reference to the player movement script.
     private bool playerDead = false;                    // A bool to show if the player is dead or not.
 
     public Text HealthDisplay;
@@ -15,7 +15,6 @@ public class PlayerHealth : MonoBehaviour {
 
     void Start()
     {
-        // Setting up the references.
         playerController = GetComponent<PlayerController>();
     }
 

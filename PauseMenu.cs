@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 
+    //PauseMeny
+
     public Button Resume;
     public Button Load;
     public Button Exit;

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class MouseScript : MonoBehaviour {
 
+    //Mus-skript, styrer situasjoner når musen skal brukes: bevegelse, døds og pausemeny
+
     Transform player;
 
     [HideInInspector]
@@ -97,7 +99,7 @@ public class MouseScript : MonoBehaviour {
             rotationX += Input.GetAxis("Mouse X") * actualMouseSpeed;
             rotationY -= Input.GetAxis("Mouse Y") * actualMouseSpeed;
 
-            rotationY = Mathf.Clamp(rotationY, -60, 60);
+            rotationY = Mathf.Clamp(rotationY, -45, 45);
 
             targetRotationX = Mathf.SmoothDamp(targetRotationX, rotationX, ref xRotV, dampSpeed);
             targetRotationY = Mathf.SmoothDamp(targetRotationY, rotationY, ref yRotV, dampSpeed);

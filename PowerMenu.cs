@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class PowerMenu : MonoBehaviour {
-
+    //Powermenyen med knapper
     public Canvas powerMenu;
     public Button anger;
     public Button fear;

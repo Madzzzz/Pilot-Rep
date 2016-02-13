@@ -3,6 +3,8 @@ using System.Collections;
 
 public class DepressionObjects : MonoBehaviour {
 
+    //Gjøre depression-objekter igjennomsiktige
+
     public bool transformed = false;
 
     void Update()

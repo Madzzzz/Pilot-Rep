@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
-
+    //Variabler
     public Camera viewport;
     CharacterController cc;
 
@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour {
     Vector3 moveVector;
     Vector3 airMoveVector;
     Vector3 platformVector;
-    Vector3 tookDamageVector;
 
     float vVelocity;
     public float gravity = 1F;
@@ -29,12 +28,13 @@ public class PlayerController : MonoBehaviour {
 
     void Start ()
     {
+        //Refreranser
         viewport = GetComponentInChildren<Camera>();
         cc = GetComponent<CharacterController>();
         forwardSpeed = forwardSpeedIn;
     }
 
-    void OnTriggerEnter(Collider coll)
+    void OnTriggerEnter(Collider coll) //Funksjoner som gjør at spilleren kan stå på bevegende platformer og ikke "skli" av
     {
         if (coll.tag == ("MovingPlatform"))
         {
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour {
             onPlatform = false;
     }
 
-    public void SadPower()
+    public void SadPower() //Om depression er aktivert
     {
         sad = true;
     }
@@ -60,8 +60,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate ()
-    {
-        tookDamageVector -= tookDamageVector * Time.deltaTime;
+    {   //Faktisk bevegelse
         xSpeed = Input.GetAxis("Horizontal");
         zSpeed = Input.GetAxis("Vertical");
         platformVector = new Vector3(0, 0, 0);
@@ -72,7 +71,7 @@ public class PlayerController : MonoBehaviour {
             airMoveVector = new Vector3(0, 0, 0);
             moveVector = transform.TransformDirection(moveVector) * forwardSpeed;
             vVelocity = 0;
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space)) //hopping
                 vVelocity = jumpHeight;
         }
 
@@ -90,23 +89,21 @@ public class PlayerController : MonoBehaviour {
 
         if (onPlatform == true)
         {
-            platformVector = (MovePlat.GetComponent<MovingPlatform>().direction);
+            platformVector = (MovePlat.GetComponent<MovingPlatform>().direction); //platformbevegelsen, kunne kansje vært mer effektiv
         }
 
         if(tookDamage == true)
         {
             vVelocity = 6;
-            Debug.Log("shuld be going backwards now");
-            tookDamageVector = (-transform.TransformDirection(moveVector)) * 2;
             tookDamage = false;
         }
 
-        if(vVelocity <= -30)
+        if(vVelocity <= -30) //død av gravitasjon
         {
             gameObject.GetComponent<PlayerHealth>().health = 0;
         }
 
-        if(sad == true)
+        if(sad == true) //krympekraften til depression og mindre movespeed
         {
             forwardSpeed = forwardSpeedIn/2;
             if (Input.GetMouseButton(0))
@@ -125,8 +122,8 @@ public class PlayerController : MonoBehaviour {
                 gameObject.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
         }
 
-        vVelocity += Physics.gravity.y * gravity * Time.deltaTime;
-        moveVector.y = vVelocity;
-        cc.Move((moveVector + platformVector + tookDamageVector + airMoveVector) * Time.deltaTime);
+        vVelocity += Physics.gravity.y * gravity * Time.deltaTime;                  //gravitasjons-matte
+        moveVector.y = vVelocity;                                                   //gravitasjons-variabel
+        cc.Move((moveVector + platformVector + airMoveVector) * Time.deltaTime);    //beveg karakteren med variablene
     }
 }

@@ -3,7 +3,9 @@ using System.Collections;
 
 public class MovingPlatform : MonoBehaviour {
 
-	public Transform platform;
+    //bevegende platform, altid en klassiker i puzzlespill
+
+    public Transform platform;
 	public Transform startTransform;
 	public Transform endTransform;
 	public float platformSpeed;

@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class StartMenu : MonoBehaviour {
 
+    //Startmeny
+
     public Canvas quitMenu;
     public Canvas startMenu;
     public Button startText;

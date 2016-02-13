@@ -3,6 +3,8 @@ using System.Collections;
 
 public class GrabbingAndDropping : MonoBehaviour {
 
+    //plukke opp og slippe/kaste ting
+
 	GameObject grabbedObject;
     public float throwForce;
     Vector3 previousGrabPosition;
@@ -30,7 +32,8 @@ public class GrabbingAndDropping : MonoBehaviour {
         {
             grabbedObject = grabObject;
             grabbedObject.GetComponent<Rigidbody>().useGravity = false;
-            grabbedObject.GetComponent<Rigidbody>().detectCollisions = false;
+            grabbedObject.AddComponent<Grabbed>();
+            gameObject.GetComponentInChildren<Hue>().Grabbing();
 
         }
     }
@@ -50,22 +53,22 @@ public class GrabbingAndDropping : MonoBehaviour {
             return false;
 	}
 
-	void dropObject()
+	public void dropObject()
     {
 		if (grabbedObject == null)
 			return;
 
        if (grabbedObject.GetComponent<Rigidbody>() != null)
         {
-            Vector3 throwVector = grabbedObject.transform.position - previousGrabPosition;
-            float speed = (throwVector.magnitude / Time.deltaTime)/2;
-            dropVelocity = (speed/dropForce) * throwVector.normalized;
+            Vector3 dropVector = grabbedObject.transform.position - previousGrabPosition;
+            float speed = (dropVector.magnitude / Time.deltaTime)/4;
+            dropVelocity = (speed/dropForce) * dropVector.normalized;
             grabbedObject.GetComponent<Rigidbody>().velocity = dropVelocity;
             grabbedObject.GetComponent<Rigidbody>().useGravity = true;
-            grabbedObject.GetComponent<Rigidbody>().detectCollisions = true;
         }
-
-		grabbedObject = null;
+        Destroy(grabbedObject.GetComponent<Grabbed>());
+        gameObject.GetComponentInChildren<Hue>().Dropping();
+        grabbedObject = null;
 	}
 
     void throwObject()
@@ -76,14 +79,12 @@ public class GrabbingAndDropping : MonoBehaviour {
         if (grabbedObject.GetComponent<Rigidbody>() != null)
         {
             Vector3 throwVector = grabbedObject.transform.position - Camera.main.transform.position;
-            float speed = throwVector.magnitude / Time.deltaTime;
-            Vector3 throwVelocity = speed * throwVector.normalized / 15;
-            throwVelocity += Camera.main.transform.forward * throwForce;
+            Vector3 throwVelocity =  throwVector.normalized * throwForce;
             grabbedObject.GetComponent<Rigidbody>().velocity = throwVelocity;
             grabbedObject.GetComponent<Rigidbody>().useGravity = true;
-            grabbedObject.GetComponent<Rigidbody>().detectCollisions = true;
         }
-
+        Destroy(grabbedObject.GetComponent<Grabbed>());
+        gameObject.GetComponentInChildren<Hue>().Dropping();
         grabbedObject = null;
 
     }
@@ -121,6 +122,6 @@ public class GrabbingAndDropping : MonoBehaviour {
             previousGrabPosition = grabbedObject.transform.position;
 			Vector3 newPosition = gameObject.transform.position + Camera.main.transform.forward * 1.5f;
 			grabbedObject.transform.position = newPosition;
-		}
+        }
     }
 }
