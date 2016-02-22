@@ -4,13 +4,13 @@ using System.Collections;
 public class RageObjects : MonoBehaviour {
 
     public bool rageOnObject = false;
-    Vector3 DoubbleSize;
-    Vector3 HalfSize;
+    Vector3 RageSize;
+    Vector3 NormalSize;
 
     void Start()
     {
-        DoubbleSize = gameObject.transform.localScale * 2;
-        HalfSize = gameObject.transform.localScale / 2;
+        RageSize = gameObject.transform.localScale * 2;
+        NormalSize = gameObject.transform.localScale;
     }
 
     void Grow()
@@ -50,12 +50,12 @@ public class RageObjects : MonoBehaviour {
         if (Camera.main.GetComponent<MouseScript>().escapePressed == false)
         {
             if (rageOnObject == true)
-                if (gameObject.transform.localScale.x <= DoubbleSize.x)
+                if (gameObject.transform.localScale.x <= RageSize.x)
                     gameObject.transform.localScale += new Vector3(gameObject.transform.localScale.x / 100, gameObject.transform.localScale.y / 100, gameObject.transform.localScale.z / 100);
 
 
             if (rageOnObject == false)
-                if (gameObject.transform.localScale.x >= HalfSize.x)
+                if (gameObject.transform.localScale.x >= NormalSize.x)
                     gameObject.transform.localScale -= new Vector3(gameObject.transform.localScale.x / 100, gameObject.transform.localScale.y / 100, gameObject.transform.localScale.z / 100);
 
         }
