@@ -15,7 +15,7 @@ public class PowerMenu : MonoBehaviour {
     void Start()
     {
         powerMenu = powerMenu.GetComponent<Canvas>();
-        powerMenu.enabled = false;
+        //powerMenu.enabled = false;
         anger = anger.GetComponent<Button>();
         fear = fear.GetComponent<Button>();
         regret = regret.GetComponent<Button>();

@@ -18,6 +18,11 @@ public class Ecstacy : MonoBehaviour {
             {
                 raycastHit.collider.gameObject.GetComponent<EcstacyObjects>().ecstacyOnObject = !raycastHit.collider.gameObject.GetComponent<EcstacyObjects>().ecstacyOnObject;
             }
+
+            if (raycastHit.collider.gameObject.tag == ("Ecstacy_Glow"))
+            {
+                raycastHit.collider.gameObject.GetComponent<EcstacyObjects>().Glow();
+            }
             else
                 return;
         }
@@ -37,12 +42,15 @@ public class Ecstacy : MonoBehaviour {
 
     void Update()
     {
-
-        if (ecstasyOn == true)
+        if (Camera.main.GetComponent<MouseScript>().escapePressed == false && Camera.main.GetComponent<MouseScript>().powerMenu == false)
         {
-            if (Input.GetMouseButtonDown(0))
+
+            if (ecstasyOn == true)
             {
-                CheckRageRange(5);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    CheckRageRange(5);
+                }
             }
         }
     }

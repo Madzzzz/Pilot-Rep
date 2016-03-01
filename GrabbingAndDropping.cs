@@ -79,7 +79,7 @@ public class GrabbingAndDropping : MonoBehaviour {
         if (grabbedObject.GetComponent<Rigidbody>() != null)
         {
             Vector3 throwVector = grabbedObject.transform.position - Camera.main.transform.position;
-            Vector3 throwVelocity =  throwVector.normalized * throwForce;
+            Vector3 throwVelocity =  (throwVector.normalized * throwForce) + GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().allMoveVector;
             grabbedObject.GetComponent<Rigidbody>().velocity = throwVelocity;
             grabbedObject.GetComponent<Rigidbody>().useGravity = true;
         }

@@ -24,6 +24,7 @@ public class MouseScript : MonoBehaviour {
     private float actualMouseSpeed;
     public bool escapePressed = false;
     public bool alive;
+    public bool powerMenu = false;
 
     void Start () {
 
@@ -88,18 +89,20 @@ public class MouseScript : MonoBehaviour {
             {
                 openMouse();
                 Time.timeScale = 0.3f;
+                powerMenu = true;
             }
 
             if (Input.GetMouseButtonUp(1))
             {
                 lockMouse();
                 Time.timeScale = 1.0f;
+                powerMenu = false;
             }
 
             rotationX += Input.GetAxis("Mouse X") * actualMouseSpeed;
             rotationY -= Input.GetAxis("Mouse Y") * actualMouseSpeed;
 
-            rotationY = Mathf.Clamp(rotationY, -45, 45);
+            rotationY = Mathf.Clamp(rotationY, -90, 90);
 
             targetRotationX = Mathf.SmoothDamp(targetRotationX, rotationX, ref xRotV, dampSpeed);
             targetRotationY = Mathf.SmoothDamp(targetRotationY, rotationY, ref yRotV, dampSpeed);

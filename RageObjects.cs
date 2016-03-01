@@ -47,8 +47,7 @@ public class RageObjects : MonoBehaviour {
 
     void Update()
     {
-        if (Camera.main.GetComponent<MouseScript>().escapePressed == false)
-        {
+        
             if (rageOnObject == true)
                 if (gameObject.transform.localScale.x <= RageSize.x)
                     gameObject.transform.localScale += new Vector3(gameObject.transform.localScale.x / 100, gameObject.transform.localScale.y / 100, gameObject.transform.localScale.z / 100);
@@ -58,6 +57,6 @@ public class RageObjects : MonoBehaviour {
                 if (gameObject.transform.localScale.x >= NormalSize.x)
                     gameObject.transform.localScale -= new Vector3(gameObject.transform.localScale.x / 100, gameObject.transform.localScale.y / 100, gameObject.transform.localScale.z / 100);
 
-        }
+        
     }
 }

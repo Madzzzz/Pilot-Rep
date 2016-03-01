@@ -42,12 +42,15 @@ public class Rage : MonoBehaviour {
 
     void Update()
     {
-
-        if (rageOn == true)
+        if (Camera.main.GetComponent<MouseScript>().escapePressed == false && Camera.main.GetComponent<MouseScript>().powerMenu == false)
         {
-            if (Input.GetMouseButtonDown(0))
+
+            if (rageOn == true)
             {
-                CheckRageRange(5);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    CheckRageRange(5);
+                }
             }
         }
     }

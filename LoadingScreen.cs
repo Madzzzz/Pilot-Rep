@@ -40,6 +40,11 @@ public class LoadingScreen : MonoBehaviour {
         StartCoroutine(DisplayLoadingScreen("Level 4"));
     }
 
+    public void patientselect()
+    {
+        StartCoroutine(DisplayLoadingScreen("PatientRoom"));
+    }
+
     public void loadSave()
     {
         StartCoroutine(DisplayLoadingScreen("PlaceHolderLevel"));

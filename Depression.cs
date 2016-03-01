@@ -37,12 +37,14 @@ public class Depression : MonoBehaviour {
 
     void Update()
     {
-
-        if (depressionOn == true)
+        if (Camera.main.GetComponent<MouseScript>().escapePressed == false && Camera.main.GetComponent<MouseScript>().powerMenu == false)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (depressionOn == true)
             {
-                CheckRageRange(4);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    CheckRageRange(5);
+                }
             }
         }
     }

@@ -3,12 +3,14 @@ using System.Collections;
 
 public class BouncePad : MonoBehaviour {
 
-    void OnTriggerEnter(Collider col)
+    void OnTriggerStay(Collider col)
     {
-
-        if (col.gameObject.tag == "Player")
+        if(col.tag == ("Player"))
         {
-            col.GetComponent<PlayerController>().onBouncypad = true;
+            col.GetComponent<PlayerController>().vVelocity = 10;
         }
+
+        else
+            col.GetComponent<Rigidbody>().AddForce(Vector3.up * 3, ForceMode.Impulse);
     }
 }

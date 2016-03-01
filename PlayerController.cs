@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
+
     //Variabler
     public Camera viewport;
     CharacterController cc;
@@ -11,20 +12,21 @@ public class PlayerController : MonoBehaviour {
     public bool onPlatform = false;
     public bool onBouncypad = false;
     public bool tookDamage = false;
-    float bounceHeight = 10;
 
     Vector3 moveVector;
     Vector3 airMoveVector;
     Vector3 platformVector;
+    public Vector3 allMoveVector;
 
-    float vVelocity;
+    public float vVelocity;
     public float gravity = 1F;
     bool sad = false;
+    bool fear = false;
 
 	public float forwardSpeedIn;
     float forwardSpeed;
 	public float jumpHeight;
-    GameObject MovePlat;
+    public GameObject MovePlat;
 
     void Start ()
     {
@@ -32,21 +34,6 @@ public class PlayerController : MonoBehaviour {
         viewport = GetComponentInChildren<Camera>();
         cc = GetComponent<CharacterController>();
         forwardSpeed = forwardSpeedIn;
-    }
-
-    void OnTriggerEnter(Collider coll) //Funksjoner som gjør at spilleren kan stå på bevegende platformer og ikke "skli" av
-    {
-        if (coll.tag == ("MovingPlatform"))
-        {
-            onPlatform = true;
-            MovePlat = coll.gameObject.transform.parent.gameObject;
-        }
-    }
-
-    void OnTriggerExit(Collider coll)
-    {
-        if (coll.tag == ("MovingPlatform"))
-            onPlatform = false;
     }
 
     public void SadPower() //Om depression er aktivert
@@ -57,6 +44,16 @@ public class PlayerController : MonoBehaviour {
     public void NotSadAnyMore()
     {
         sad = false;
+    }
+
+    public void FearPower()
+    {
+        fear = true;
+    }
+
+    public void NoFear()
+    {
+        fear = false;
     }
 
     void FixedUpdate ()
@@ -79,12 +76,6 @@ public class PlayerController : MonoBehaviour {
         {
             airMoveVector = new Vector3(xSpeed, 0, zSpeed);
             airMoveVector = transform.TransformDirection(airMoveVector) * (forwardSpeed/4);
-        }
-
-        if (onBouncypad == true)
-        {
-            vVelocity = bounceHeight;
-            onBouncypad = false;
         }
 
         if (onPlatform == true)
@@ -117,13 +108,23 @@ public class PlayerController : MonoBehaviour {
 
         if (sad == false)
         {
-            forwardSpeed = forwardSpeedIn;
             if (gameObject.transform.localScale.x < 1.0f)
                 gameObject.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
         }
 
+        if (fear == true)
+        {
+            forwardSpeed = forwardSpeedIn * 2;
+        }
+
+        if (fear == false && sad == false)
+        {
+            forwardSpeed = forwardSpeedIn;
+        }
+
         vVelocity += Physics.gravity.y * gravity * Time.deltaTime;                  //gravitasjons-matte
         moveVector.y = vVelocity;                                                   //gravitasjons-variabel
-        cc.Move((moveVector + platformVector + airMoveVector) * Time.deltaTime);    //beveg karakteren med variablene
+        allMoveVector = (moveVector + platformVector + airMoveVector);              
+        cc.Move(allMoveVector * Time.deltaTime);                                    //beveg karakteren med variablene
     }
 }
