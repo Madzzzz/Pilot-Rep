@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour {
     public Button Load;
     public Button Exit;
     public Canvas PauseScreen;
+    public Canvas SoundSlider;
 
     void Start () {
         Resume = Resume.GetComponent<Button>();
@@ -22,10 +23,12 @@ public class PauseMenu : MonoBehaviour {
     public void Pause()
     {
         PauseScreen.enabled = true;
+        SoundSlider.enabled = true;
     }
 
     public void Unpause()
     {
         PauseScreen.enabled = false;
+        SoundSlider.enabled = false;
     }
 }

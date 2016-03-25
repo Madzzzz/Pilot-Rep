@@ -26,54 +26,85 @@ public class PatientMenu : MonoBehaviour {
         Selected4.enabled = false;
     }
 
-    public void ReturnPress()
+    IEnumerator ReturnPress()
     {
-        Main.enabled = true;
+        
         Selected.enabled = false;
         Selected1.enabled = false;
         Selected2.enabled = false;
         Selected3.enabled = false;
         Selected4.enabled = false;
+        yield return new WaitForSeconds(2.0f);
+        Main.enabled = true;
     }
 
-    public void Select1()
+    IEnumerator Select1()
     {
         Main.enabled = false;
+        Selected2.enabled = false;
+        Selected3.enabled = false;
+        Selected4.enabled = false;
+        yield return new WaitForSeconds(2.5f);
         Selected1.enabled = true;
-        Selected2.enabled = false;
-        Selected3.enabled = false;
-        Selected4.enabled = false;
         Selected.enabled = true;
     }
 
-    public void Select2()
+    IEnumerator Select2()
     {
         Main.enabled = false;
         Selected1.enabled = false;
+        Selected3.enabled = false;
+        Selected4.enabled = false;
+        yield return new WaitForSeconds(1.5f);
         Selected2.enabled = true;
-        Selected3.enabled = false;
-        Selected4.enabled = false;
         Selected.enabled = true;
     }
 
-    public void Select3()
+    IEnumerator Select3()
     {
         Main.enabled = false;
         Selected1.enabled = false;
         Selected2.enabled = false;
+        Selected4.enabled = false;
+        yield return new WaitForSeconds(1.5f);
         Selected3.enabled = true;
-        Selected4.enabled = false;
         Selected.enabled = true;
     }
 
-    public void Select4()
+    IEnumerator Select4()
     {
         Main.enabled = false;
         Selected1.enabled = false;
         Selected2.enabled = false;
         Selected3.enabled = false;
+        yield return new WaitForSeconds(2.5f);
         Selected4.enabled = true;
         Selected.enabled = true;
+    }
+
+    public void InitReturn()
+    {
+        StartCoroutine(ReturnPress());
+    }
+
+    public void Init1()
+    {
+        StartCoroutine(Select1());
+    }
+
+    public void Init2()
+    {
+        StartCoroutine(Select2());
+    }
+
+    public void Init3()
+    {
+        StartCoroutine(Select3());
+    }
+
+    public void Init4()
+    {
+        StartCoroutine(Select4());
     }
 
 }

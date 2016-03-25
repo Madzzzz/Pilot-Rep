@@ -9,8 +9,6 @@ public class LoadingScreen : MonoBehaviour {
     public GameObject text;
     public GameObject progressbar;
 
-    
-
     private int loadProgress = 0;
 
     // Loading screen med progress-bar
@@ -22,7 +20,7 @@ public class LoadingScreen : MonoBehaviour {
 
     public void load1()
     {
-        StartCoroutine(DisplayLoadingScreen("Level 1"));
+        StartCoroutine(DisplayLoadingScreen("PlaceHolderLevel"));
     }
 
     public void load2()
@@ -45,9 +43,9 @@ public class LoadingScreen : MonoBehaviour {
         StartCoroutine(DisplayLoadingScreen("PatientRoom"));
     }
 
-    public void loadSave()
+    public void loadSave(string loadLevel)
     {
-        StartCoroutine(DisplayLoadingScreen("PlaceHolderLevel"));
+        StartCoroutine(DisplayLoadingScreen(loadLevel));
     }
 
     public void loadFinish()
@@ -60,15 +58,17 @@ public class LoadingScreen : MonoBehaviour {
         StartCoroutine(DisplayLoadingScreen("StartMenu"));
     }
 
-    public void reloadCurrent()
+    public void settings()
     {
-        StartCoroutine(DisplayLoadingScreen(Application.loadedLevelName));
-
-        //Application.LoadLevel(Application.loadedLevel);
-        //SceneManager.LoadScene(SceneManager.GetActiveScene);
+        StartCoroutine(DisplayLoadingScreen("Settings"));
     }
 
-    IEnumerator DisplayLoadingScreen(string level)
+    public void reloadCurrent()
+    {
+        StartCoroutine(DisplayLoadingScreen(SceneManager.GetActiveScene().name));
+    }
+
+    public IEnumerator DisplayLoadingScreen(string level)
     {
         background.SetActive(true);
         text.SetActive(true);
@@ -79,15 +79,13 @@ public class LoadingScreen : MonoBehaviour {
         text.GetComponent<GUIText>().text = "Loading Progress: " + loadProgress + "%";
 
         AsyncOperation async = SceneManager.LoadSceneAsync(level);
+        
         while (!async.isDone)
         {
             loadProgress = (int)(async.progress * 100);
-            text.GetComponent<GUIText>().text = "Loading Progress: " + loadProgress + "%";
+            text.GetComponent<GUIText>().text = "Loading Progress: " + (loadProgress + 10) + "%";
             progressbar.transform.localScale = new Vector3(async.progress, progressbar.transform.localScale.y, progressbar.transform.localScale.z);
             yield return null;
         }
-
-        
-
     }
 }

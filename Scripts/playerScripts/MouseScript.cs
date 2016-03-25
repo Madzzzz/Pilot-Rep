@@ -26,14 +26,19 @@ public class MouseScript : MonoBehaviour {
     public bool alive;
     public bool powerMenu = false;
 
-    void Start () {
-
-        rotationX = 90;
+    void Start ()
+    {
         player = transform.root;
         lockMouse();
         alive = true;
         Time.timeScale = 1.0f;
     }	
+
+    public void loadRot(float rotX, float rotY)
+    {
+        rotationX = rotX;
+        rotationY = rotY;
+    }
 
     void lockMouse()
     {
@@ -57,12 +62,20 @@ public class MouseScript : MonoBehaviour {
             openMouse();
             Time.timeScale = 0.0f;
             GameObject.Find("PauseScreen").GetComponent<PauseMenu>().Pause();
+            GameObject.Find("SpaceWalrusControll").GetComponent<PlayMovieTexture>().PauseSpaceWalrus();
+            GameObject.Find("OldGameMusic").GetComponent<SoundControll>().StopSound();
+            GameObject.Find("OldGameMusic").GetComponent<StayAlive>().show();
+            GameObject.Find("Basic_cube").GetComponent<SoundCollision>().Pause();
         }
         else
         {
             escapePressed = false;
             lockMouse();
             GameObject.Find("PauseScreen").GetComponent<PauseMenu>().Unpause();
+            GameObject.Find("SpaceWalrusControll").GetComponent<PlayMovieTexture>().UnPauseSpaceWalrus();
+            GameObject.Find("OldGameMusic").GetComponent<SoundControll>().StartSound();
+            GameObject.Find("OldGameMusic").GetComponent<StayAlive>().noShow();
+            GameObject.Find("Basic_cube").GetComponent<SoundCollision>().UnPause();
             Time.timeScale = 1.0f;
         }
     }
@@ -73,13 +86,17 @@ public class MouseScript : MonoBehaviour {
         openMouse();
         escapePressed = true;
         Time.timeScale = 0.0f;
+        GameObject.Find("SpaceWalrusControll").GetComponent<PlayMovieTexture>().PauseSpaceWalrus();
+        GameObject.Find("OldGameMusic").GetComponent<SoundControll>().StopSound();
+        GameObject.Find("Basic_cube").GetComponent<SoundCollision>().Pause();
     }
 	
 	void Update () {
 
         if (Input.GetButtonDown(("Escape")))
         {
-            PauseUnpause();
+            if(powerMenu == false)
+                PauseUnpause();
         }
 
         if (escapePressed == false)

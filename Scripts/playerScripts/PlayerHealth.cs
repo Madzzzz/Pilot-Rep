@@ -72,7 +72,6 @@ public class PlayerHealth : MonoBehaviour {
         if (coll.tag == ("Enemy"))
         {
             TakeDamage(1);
-            gameObject.GetComponent<PlayerController>().tookDamage = true;
         }
     }
 }

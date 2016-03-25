@@ -62,7 +62,7 @@ public class GrabbingAndDropping : MonoBehaviour {
         {
             Vector3 dropVector = grabbedObject.transform.position - previousGrabPosition;
             float speed = (dropVector.magnitude / Time.deltaTime)/4;
-            dropVelocity = (speed/dropForce) * dropVector.normalized;
+            dropVelocity = ((speed/dropForce) * dropVector.normalized) + GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().allMoveVector;
             grabbedObject.GetComponent<Rigidbody>().velocity = dropVelocity;
             grabbedObject.GetComponent<Rigidbody>().useGravity = true;
         }
