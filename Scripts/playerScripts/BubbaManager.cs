@@ -11,6 +11,10 @@ public class BubbaManager : MonoBehaviour {
     public float rotX;
     public float rotY;
 
+    public Texture2D cursorTexture;
+    public CursorMode cursorMode = CursorMode.Auto;
+    public Vector2 hotSpot = Vector2.zero;
+
     public bool loaded = false;
 
     void Start ()
@@ -33,6 +37,7 @@ public class BubbaManager : MonoBehaviour {
         }
 
         this.gameObject.name = "OldBubbaManager";
+        Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
         DontDestroyOnLoad(gameObject);
     }
 

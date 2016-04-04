@@ -11,8 +11,6 @@ public class PlayerHealth : MonoBehaviour {
 
     public Text HealthDisplay;
 
-    public Canvas deathScreen;
-
     void Start()
     {
         playerController = GetComponent<PlayerController>();
@@ -57,7 +55,7 @@ public class PlayerHealth : MonoBehaviour {
     {
         playerController.enabled = false;
         Camera.main.GetComponent<MouseScript>().DeathScreen();
-        deathScreen.enabled = true;
+        GameObject.Find("DeathScreen").GetComponent<DeathMenu>().ShowDeathmenu();
     }
 
 

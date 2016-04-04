@@ -20,4 +20,14 @@ public class DeathMenu : MonoBehaviour {
         DeathScreen.enabled = false;
     }
 
+    public void HideDeathmenu()
+    {
+        DeathScreen.enabled = false;
+    }
+
+    public void ShowDeathmenu()
+    {
+        DeathScreen.enabled = true;
+    }
+
 }

@@ -107,4 +107,14 @@ public class PatientMenu : MonoBehaviour {
         StartCoroutine(Select4());
     }
 
+    public void GameStart()
+    {
+        Selected.enabled = false;
+        Selected1.enabled = false;
+        Selected2.enabled = false;
+        Selected3.enabled = false;
+        Selected4.enabled = false;
+        Main.enabled = false;
+    }
+
 }

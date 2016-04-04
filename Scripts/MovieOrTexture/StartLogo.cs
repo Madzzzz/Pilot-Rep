@@ -8,6 +8,7 @@ public class StartLogo : MonoBehaviour {
 
     void Start()
     {
+        Cursor.visible = false;
         ShuldDeleteStartLogo();
     }
 
@@ -19,12 +20,14 @@ public class StartLogo : MonoBehaviour {
         movie.Play();
         yield return new WaitForSeconds(5);
         StartMenu.enabled = true;
+        Cursor.visible = true;
         Destroy(gameObject);
     }
 
     void DeleteSelfBeforePlay()
     {
         StartMenu.enabled = true;
+        Cursor.visible = true;
         Destroy(gameObject);
     }
 

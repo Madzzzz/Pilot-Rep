@@ -8,29 +8,27 @@ public class SlidingDoor : MonoBehaviour {
     public Transform startTrapPos;
     public float doorSpeed;
 
-	public bool trapped = false;
-
 	Vector3 direction;
 	Transform destination;
 
 	void Start(){
-		SetDestination (endTrapPos);
+		SetDestination (startTrapPos);
 	}
 
 	public void MakeTrue(){
-		trapped = true;
-	}
+        SetDestination(endTrapPos);
+        doorSpeed = 2;
+    }
 
 	void FixedUpdate(){
 
-		if (trapped == true) {
-            SetDestination(endTrapPos);
-			trapWallPlaceholder.GetComponent<Rigidbody>().MovePosition (trapWallPlaceholder.position + direction * doorSpeed * Time.fixedDeltaTime);
-		}
+		trapWallPlaceholder.GetComponent<Rigidbody>().MovePosition (trapWallPlaceholder.position + direction * doorSpeed * Time.fixedDeltaTime);
 
-		if (Vector3.Distance (trapWallPlaceholder.position, destination.position) < doorSpeed * Time.fixedDeltaTime) {
-			doorSpeed = 0;
-		}
+
+        if (Vector3.Distance(trapWallPlaceholder.position, destination.position) < doorSpeed * Time.fixedDeltaTime)
+        {
+            doorSpeed = 0;
+        }
 	}
 
 	void OnDrawGizmos(){
@@ -38,7 +36,10 @@ public class SlidingDoor : MonoBehaviour {
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireCube (endTrapPos.position, trapWallPlaceholder.localScale);
 
-	}
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(startTrapPos.position, trapWallPlaceholder.localScale);
+
+    }
 
 	void SetDestination(Transform dest){
 
@@ -46,4 +47,10 @@ public class SlidingDoor : MonoBehaviour {
 		direction = (destination.position - trapWallPlaceholder.position).normalized;
 
 	}
+
+    public void Triggerd()
+    {
+        SetDestination(startTrapPos);
+        doorSpeed = 2;
+    }
 }
