@@ -16,7 +16,7 @@ public class Depression : MonoBehaviour {
         {
             if (raycastHit.collider.gameObject.tag == ("Depression"))
             {
-                raycastHit.collider.gameObject.GetComponent<DepressionObjects>().transformed =!raycastHit.collider.gameObject.GetComponent<DepressionObjects>().transformed;
+                raycastHit.collider.gameObject.GetComponent<DepressionObjects>().Transform();
             }
             else
                 return;

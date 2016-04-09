@@ -6,17 +6,34 @@ public class DepressionObjects : MonoBehaviour {
     //Gjøre depression-objekter igjennomsiktige
 
     public bool transformed = false;
+    public Shader shader1;
+    public Shader shader2;
+    public Renderer rend;
 
-    void Update()
+    void Start()
     {
+        rend = GetComponent<Renderer>();
+        shader1 = Shader.Find("Standard");
+        shader2 = Shader.Find("Transparent/Diffuse");
+
+        rend.material.shader = shader1;
+        rend.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
+    public void Transform()
+    {
+        transformed = !transformed;
+
         if (transformed == true)
         {
-            gameObject.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
+            rend.material.shader = shader2;
+            rend.material.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
         }
 
         if (transformed == false)
         {
-            gameObject.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            rend.material.shader = shader1;
+            rend.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }
     }
 }

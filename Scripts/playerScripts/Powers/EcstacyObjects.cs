@@ -24,6 +24,11 @@ public class EcstacyObjects : MonoBehaviour {
         
     }
 
+    public void Float()
+    {
+        ecstacyOnObject = !ecstacyOnObject;
+    }
+
     void Update () {
 
         

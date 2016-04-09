@@ -29,8 +29,6 @@ public class PlayerHealth : MonoBehaviour {
                 PlayerDying();
             else
             {
-                // Otherwise, if the player is dead, call the PlayerDead and LevelReset functions.
-                PlayerDead();
                 DeathScreen();
             }
         }
@@ -45,17 +43,12 @@ public class PlayerHealth : MonoBehaviour {
         playerDead = true;
     }
 
-
-    public void PlayerDead()
-    {
-    }
-
-
     void DeathScreen()
     {
         playerController.enabled = false;
         Camera.main.GetComponent<MouseScript>().DeathScreen();
         GameObject.Find("DeathScreen").GetComponent<DeathMenu>().ShowDeathmenu();
+        health = 1;
     }
 
 

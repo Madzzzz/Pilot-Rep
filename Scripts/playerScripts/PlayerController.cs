@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour {
     public void loadPos(float posX, float posY, float posZ)
     {
         gameObject.transform.position = new Vector3(posX, posY, posZ);
+        GameObject.Find("Saveing Platforms").GetComponent<PlatformRemove>().DeleteChildren();
     }
 
     public void SadPower() //Om depression er aktivert

@@ -85,6 +85,7 @@ public class MouseScript : MonoBehaviour {
     {
         openMouse();
         escapePressed = true;
+        alive = false;
         Time.timeScale = 0.0f;
         GameObject.Find("SpaceWalrusControll").GetComponent<PlayMovieTexture>().PauseSpaceWalrus();
         GameObject.Find("OldGameMusic").GetComponent<SoundControll>().StopSound();
@@ -95,7 +96,7 @@ public class MouseScript : MonoBehaviour {
 
         if (Input.GetButtonDown(("Escape")))
         {
-            if(powerMenu == false)
+            if(powerMenu == false && alive == true)
                 PauseUnpause();
         }
 

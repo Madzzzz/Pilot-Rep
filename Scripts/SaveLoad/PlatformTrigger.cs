@@ -7,13 +7,12 @@ public class PlatformTrigger : MonoBehaviour {
     public Transform target;
     float distance;
 
-    void Start()
+    public void LoadedRemove()
     {
-        distance = Vector3.Distance(transform.position, target.position);
+        distance = Vector3.Distance(gameObject.transform.position, target.position);
 
-        if(distance <= 5)
-            if (GameObject.Find("OldBubbaManager").GetComponent<BubbaManager>().loaded == true)
-                Destroy(gameObject);
+        if (distance <= 5)
+            Destroy(gameObject);
     }
 
 	void OnTriggerEnter(Collider coll)

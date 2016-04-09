@@ -16,7 +16,7 @@ public class Ecstacy : MonoBehaviour {
         {
             if (raycastHit.collider.gameObject.tag == ("Ecstacy"))
             {
-                raycastHit.collider.gameObject.GetComponent<EcstacyObjects>().ecstacyOnObject = !raycastHit.collider.gameObject.GetComponent<EcstacyObjects>().ecstacyOnObject;
+                raycastHit.collider.gameObject.GetComponent<EcstacyObjects>().Float();
             }
 
             if (raycastHit.collider.gameObject.tag == ("Ecstacy_Glow"))

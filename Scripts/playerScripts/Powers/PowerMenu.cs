@@ -22,7 +22,7 @@ public class PowerMenu : MonoBehaviour {
         depression = depression.GetComponent<Button>();
         ecstacy = ecstacy.GetComponent<Button>();
 
-        CheckWhichLevel();
+        //CheckWhichLevel();
     }
 
     void CheckWhichLevel()

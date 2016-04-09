@@ -25,24 +25,28 @@ public class Hue : MonoBehaviour {
 
     public void Grabbing()
     {
-        //gameObject.transform.Translate(Vector3.forward / 5);
+        gameObject.GetComponent<Animation>().Play("holdin");
+        //gameObject.GetComponent<Animation>().Stop("idle");
     }
 
     public void Dropping()
     {
-        //gameObject.transform.Translate(Vector3.back / 5);
+        gameObject.GetComponent<Animation>().Stop("holdin");
+        //gameObject.GetComponent<Animation>().Play("idle");
     }
 
     void FixedUpdate()
     {
-        if(cc.isGrounded == true)
+        if (cc.isGrounded == true && Camera.main.GetComponent<GrabbingAndDropping>().grabbing == false)
+        {
             if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("d") || Input.GetKey("s"))
                 gameObject.GetComponent<Animation>().Play("walkin");
-        if (cc.isGrounded == true)
+
             if (Input.GetKey("space"))
                 gameObject.GetComponent<Animation>().Play("jump");
 
-        if (Input.GetKey("e"))
-            gameObject.GetComponent<Animation>().Play("holdin");
+            //else
+                //gameObject.GetComponent<Animation>().Play("idle");
+        }
     }
 }

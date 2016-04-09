@@ -11,6 +11,7 @@ public class GrabbingAndDropping : MonoBehaviour {
     public float dropForce;
     Vector3 dropVelocity;
     public bool rage = false;
+    public bool grabbing = false;
 
     GameObject GetHoverObject(float range)
     {
@@ -34,6 +35,7 @@ public class GrabbingAndDropping : MonoBehaviour {
             grabbedObject.GetComponent<Rigidbody>().useGravity = false;
             grabbedObject.AddComponent<Grabbed>();
             gameObject.GetComponentInChildren<Hue>().Grabbing();
+            grabbing = true;
 
         }
     }
@@ -69,7 +71,8 @@ public class GrabbingAndDropping : MonoBehaviour {
         Destroy(grabbedObject.GetComponent<Grabbed>());
         gameObject.GetComponentInChildren<Hue>().Dropping();
         grabbedObject = null;
-	}
+        grabbing = false;
+    }
 
     void throwObject()
     {
@@ -85,6 +88,7 @@ public class GrabbingAndDropping : MonoBehaviour {
         }
         Destroy(grabbedObject.GetComponent<Grabbed>());
         gameObject.GetComponentInChildren<Hue>().Dropping();
+        grabbing = false;
         grabbedObject = null;
 
     }

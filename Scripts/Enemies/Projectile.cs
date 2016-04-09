@@ -8,16 +8,20 @@ public class Projectile : MonoBehaviour {
     void Start()
     {
         boom = gameObject.GetComponentInChildren<ParticleSystem>();
+        StartCoroutine(SelfDestruct());
     }
 
-    IEnumerator OnTriggerEnter(Collider coll)
+    IEnumerator OnTriggerEnter()
     {
         boom.Play();
-        if(coll.tag == "Player")
-        {
-            coll.GetComponent<PlayerHealth>().TakeDamage(1);
-        }
+        gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         yield return new WaitForSeconds(0.05f);
+        Destroy(gameObject);
+    }
+
+    IEnumerator SelfDestruct()
+    {
+        yield return new WaitForSeconds(5);
         Destroy(gameObject);
     }
 }
