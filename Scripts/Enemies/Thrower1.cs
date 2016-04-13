@@ -15,24 +15,34 @@ public class Thrower1 : MonoBehaviour {
 
     IEnumerator Attack()
     {
-        if (distance < 20)
+        Vector3 position = transform.position;
+        RaycastHit raycastHit;
+        Vector3 player = target.position;
+
+        if (Physics.Linecast(position, player, out raycastHit))
         {
-            GameObject projectiletInstance;
-            projectiletInstance = Instantiate(projectile, projectile.transform.position, projectile.transform.rotation) as GameObject;
-            projectiletInstance.GetComponent<Rigidbody>().useGravity = false;
-            projectiletInstance.GetComponent<Rigidbody>().AddForce(transform.forward * 400);
-            projectiletInstance.GetComponent<Collider>().enabled = false;
-            projectiletInstance.AddComponent<Projectile>();
-            yield return new WaitForSeconds(0.8f);
-            projectiletInstance.GetComponent<Collider>().enabled = true;
+            if (raycastHit.collider.gameObject.tag == "Player")
+            {
+                if (distance < 20)
+                {
+                    GameObject projectiletInstance;
+                    projectiletInstance = Instantiate(projectile, projectile.transform.position, projectile.transform.rotation) as GameObject;
+                    projectiletInstance.GetComponent<Rigidbody>().useGravity = false;
+                    projectiletInstance.GetComponent<Rigidbody>().AddForce(transform.forward * 400);
+                    projectiletInstance.GetComponent<Collider>().enabled = false;
+                    projectiletInstance.AddComponent<Projectile>();
+                    yield return new WaitForSeconds(0.8f);
+                    projectiletInstance.GetComponent<Collider>().enabled = true;
+                }
+            }
         }
 
         yield return new WaitForSeconds(0.8f);
         StartCoroutine(Attack());
     }
 
-	
-	void Update ()
+
+    void Update ()
     {
         distance = Vector3.Distance(transform.position, target.position);
 

@@ -15,7 +15,6 @@ public static class SaveLoad
         BinaryFormatter binary = new BinaryFormatter();
         FileStream fStream = File.Create(Application.persistentDataPath + "/Hippocampus.Save");
         //Debug.Log(Application.persistentDataPath);
-        //alt vi har lyst å lagre fra bubbasave klassen
         BubbaSave saver = new BubbaSave();
         saver.whichLevelLoaded = SceneManager.GetActiveScene().name;
         saver.soundVolume = GameObject.Find("OldGameMusic").GetComponent<StayAlive>().VolSlider.value;
